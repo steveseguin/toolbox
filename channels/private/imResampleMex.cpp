@@ -101,7 +101,7 @@ void resample( T *A, T *B, int ha, int hb, int wa, int wb, int d, T r ) {
     // resample along y direction (B -> C)
     if( ha==hb*2 ) {
       T r2 = r/2; int k=((~((size_t) B0) + 1) & 15)/4; y=0;
-      for( ; y<k; y++ )  B0[y]=(C[2*y]+C[2*y+1])*r2;
+      for( ; y<k && y<hb; y++ ) B0[y]=(C[2*y]+C[2*y+1])*r2;
       if(sse) for(; y<hb-4; y+=4) STR(Bf0[y],MUL((float)r2,_mm_shuffle_ps(ADD(
         LDu(Cf[2*y]),LDu(Cf[2*y+1])),ADD(LDu(Cf[2*y+4]),LDu(Cf[2*y+5])),136)));
       for( ; y<hb; y++ ) B0[y]=(C[2*y]+C[2*y+1])*r2;
